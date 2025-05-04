@@ -26,17 +26,17 @@ RUN apt-get update && apt-get install -y docker-ce-cli
 USER jenkins
 
 # Install required Jenkins plugins using the plugin management tool
-# Note: Some specified versions (e.g., 1.0.0) are very old and should likely be updated.
+# Let the tool resolve the latest compatible versions for most plugins
 RUN jenkins-plugin-cli --plugins \
-  # blueocean: Provides a modern, visual user interface for viewing Jenkins Pipelines. (Note: No longer actively developed)
-  "blueocean:2.504.1-1 \
-   # docker-workflow: Enables the use of Docker commands within Jenkins Pipelines (e.g., docker.build(), docker.image().inside() {}). Relies on Docker CLI.
-   docker-workflow:2.504.1-1 \
-   # pipeline-github-lib: Allows loading external Groovy libraries (Shared Libraries) directly from GitHub repositories using @Library('github.com/...') syntax in Jenkinsfiles.
-   pipeline-github-lib:1.0.0 \
-   # github-branch-source: Enables creating Multibranch Pipeline jobs that automatically discover branches and pull requests in GitHub repositories/organizations and manage corresponding Jenkins jobs.
-   github-branch-source:1.0.0 \
-   # git-client: Provides the core low-level Git functionality (clone, fetch, checkout etc.) required by Jenkins and other plugins like github-branch-source or the standard Git SCM. (Version 4.12.0 is outdated)
-   git-client:4.12.0"
+  # blueocean: Provides a modern, visual user interface (Note: No longer actively developed)
+  blueocean:latest \
+  # docker-workflow: Enables the use of Docker commands within Jenkins Pipelines
+  docker-workflow:latest \
+  # pipeline-github-lib: Allows loading external Groovy libraries from GitHub
+  pipeline-github-lib:latest \
+  # github-branch-source: Enables creating Multibranch Pipeline jobs from GitHub
+  github-branch-source:latest \
+  # git-client: Provides core Git functionality
+  git-client:latest
 
 # The container will now run Jenkins with these tools and plugins pre-installed.
